@@ -7,6 +7,8 @@ let breakSeconds = 300;
 let reset = function() { 
     clearInterval(countDown);
     clearInterval(breakTimer);
+    countDown = undefined;
+    breakTimer = undefined;
     seconds= 1500;
     breakSeconds = 300;
     displayStudyTime.textContent = startingDisplay;
@@ -60,27 +62,28 @@ countDown = setInterval(() => {
 
 addStudyTime.addEventListener("click", function() {
     seconds = seconds + 300;
-    displayStudyTime.textContent = `${Math.floor(seconds / 60)}:${seconds % 60}0`;
+    displayStudyTime.textContent = `${Math.floor(seconds / 60) < 10 ? "0": ""}${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? "0": ""}${seconds % 60}`;
+    
     
 })
 
 minusStudyTime.addEventListener("click", function() {
     seconds = seconds - 300;
-    displayStudyTime.textContent = `${Math.floor(seconds / 60)}:${seconds % 60}0`;
+    displayStudyTime.textContent = `${Math.floor(seconds / 60) < 10 ? "0": ""}${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? "0": ""}${seconds % 60}`;
    
 })
 
 
 addBreakTime.addEventListener("click", function(){
     breakSeconds = breakSeconds + 300;
-    displayBreak.textContent = `${Math.floor(breakSeconds / 60)}:${breakSeconds % 60}0`;
+    displayBreak.textContent = `${Math.floor(breakSeconds / 60) < 10 ? "0": ""}${Math.floor(breakSeconds / 60)}:${breakSeconds % 60 < 10 ? "0": ""}${breakSeconds % 60}`;
   
 })
 
 
 minusBreakTime.addEventListener("click", function(){
     breakSeconds = breakSeconds - 300;
-    displayBreak.textContent = `${Math.floor(breakSeconds / 60)}:${breakSeconds % 60}0`;
+    displayBreak.textContent = `${Math.floor(breakSeconds / 60) < 10 ? "0": ""}${Math.floor(breakSeconds / 60)}:${breakSeconds % 60 < 10 ? "0": ""}${breakSeconds % 60}`
     
 })
 displayReset.addEventListener("click", reset);
