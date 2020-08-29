@@ -1,11 +1,12 @@
-let seconds = 60;
+let seconds = 1500;
 let countDown;
 let isCountDown = false;
 let breakTimer;
 let startingDisplay = `${Math.floor(seconds / 60)}:${seconds % 60}0`;
 let breakSeconds = 300;
 let isMuted = false;
-let alarmSound = new Audio('shortalarm.wav');
+let countOverSound = new Audio("https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3");
+let breakOverSound = new Audio("https://www.soundjay.com/misc/sounds/bell-ringing-04.mp3");
 
 //Preselecting all the elements to use later
 const displayTotalTime = document.querySelector(".mainTimeDisplay");
@@ -40,10 +41,12 @@ displayTotalTime.textContent = startingDisplay;
 displayStudyTime.textContent = startingDisplay;
 displayBreakTime.textContent = `${Math.floor(breakSeconds / 60)}:${breakSeconds % 60}0`;
 
+
 function countDownTimer() {
     fadeIn(displayMessage, "Focus like you mean it!");
     isCountDown = true;
     startTimer.disabled = true;
+
     //begins the countdown timer
     countDown = setInterval(() => {
         seconds--;
@@ -56,9 +59,9 @@ function countDownTimer() {
             fadeIn(displayMessage, "Take a nice break :)");
             clearInterval(countDown);
             if (isMuted === true) {
-                alarmSound = "";
+                countOverSound = "";
             } else {
-                alarmSound.play();
+                countOverSound.play();
             }
             breakTimer = setInterval(() => { //Break timer begins here
                 breakSeconds--;
@@ -69,6 +72,7 @@ function countDownTimer() {
 
                 if (breakSeconds < 0) {
                     reset(); //Resets everything once the break ends
+                    breakOverSound.play();
                 }
             }, 1000);
         }
