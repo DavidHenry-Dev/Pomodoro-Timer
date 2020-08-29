@@ -1,4 +1,4 @@
-let seconds = 1500;
+let seconds = 60;
 let countDown;
 let isCountDown = false;
 let breakTimer;
@@ -6,8 +6,23 @@ let startingDisplay = `${Math.floor(seconds / 60)}:${seconds % 60}0`;
 let breakSeconds = 300;
 let isMuted = false;
 let alarmSound = new Audio('shortalarm.wav');
+
+//Preselecting all the elements to use later
+const displayTotalTime = document.querySelector(".mainTimeDisplay");
+const displayStudyTime = document.querySelector(".displayStudy");
+const displayBreakTime = document.querySelector(".displayBreak");
+const addStudyTime = document.querySelector("#addStudy");
+const minusStudyTime = document.querySelector("#minusStudy");
+const addBreakTime = document.querySelector("#addBreak");
+const minusBreakTime = document.querySelector("#minusBreak");
+const startTimer = document.querySelector("#start");
+const displayReset = document.querySelector("#reset");
+const alarmButton = document.querySelector("#sound-btn");
+const adjustButtons = document.querySelector(".adjust-btn");
+
 //The reset function stored in global variable to allow all timers access
 let reset = function() {
+    displayMessage.textContent = "";
     isCountDown = false;
     startTimer.disabled = false;
     clearInterval(countDown);
@@ -20,25 +35,13 @@ let reset = function() {
     displayTotalTime.textContent = startingDisplay;
 }
 
-//Preselecting all the elements to use later
-const displayTotalTime = document.querySelector(".mainTimeDisplay");
-const displayStudyTime = document.querySelector(".displayStudy");
-const displayBreakTime = document.querySelector('.displayBreak');
-const addStudyTime = document.querySelector("#addStudy");
-const minusStudyTime = document.querySelector("#minusStudy");
-const addBreakTime = document.querySelector("#addBreak");
-const minusBreakTime = document.querySelector("#minusBreak");
-const startTimer = document.querySelector("#start");
-const displayReset = document.querySelector("#reset");
-const alarmButton = document.querySelector("#sound-btn");
-const adjustButtons = document.querySelector(".adjust-btn");
-
 //displays inital starting time for the timers
 displayTotalTime.textContent = startingDisplay;
 displayStudyTime.textContent = startingDisplay;
 displayBreakTime.textContent = `${Math.floor(breakSeconds / 60)}:${breakSeconds % 60}0`;
 
 function countDownTimer() {
+    fadeIn(displayMessage, "Focus like you mean it!");
     isCountDown = true;
     startTimer.disabled = true;
     //begins the countdown timer
@@ -50,13 +53,14 @@ function countDownTimer() {
         displayTotalTime.textContent = displayTimer;
         //stop the timer once it reachs 00:00 and begin the break timer
         if (seconds <= 0) {
+            fadeIn(displayMessage, "Take a nice break :)");
             clearInterval(countDown);
             if (isMuted === true) {
                 alarmSound = "";
             } else {
                 alarmSound.play();
             }
-            breakTimer = setInterval(() => {
+            breakTimer = setInterval(() => { //Break timer begins here
                 breakSeconds--;
                 const breakMinutes = Math.floor(breakSeconds / 60);
                 const remainingBreakSeconds = breakSeconds % 60;
@@ -64,19 +68,17 @@ function countDownTimer() {
                 displayTotalTime.textContent = displayBreak;
 
                 if (breakSeconds < 0) {
-                    reset();
+                    reset(); //Resets everything once the break ends
                 }
             }, 1000);
         }
     }, 1000);
-
 }
 
-//used for disabling the incremental buttons in the functions below
+//Used for disabling the incremental buttons whilte countdown is ongoing
 function disableAdjusting() {
     adjustButtons.disabled = true;
 }
-
 
 //Mutes and unmutes the alarm 
 function mute_Unmute() {
@@ -91,7 +93,7 @@ function mute_Unmute() {
         alarmSound = new Audio('shortalarm.wav');
     }
 }
-
+///////////////////Buttons for adjusting study/break times
 addStudyTime.addEventListener("click", function() {
     if (isCountDown) {
         disableAdjusting()
@@ -129,7 +131,45 @@ minusBreakTime.addEventListener("click", function() {
         displayBreakTime.textContent = `${Math.floor(breakSeconds / 60) < 10 ? "0": ""}${Math.floor(breakSeconds / 60)}:${breakSeconds % 60 < 10 ? "0": ""}${breakSeconds % 60}`;
     }
 })
+/////////////////////////////
 
+let displayMessage = document.getElementById('messages');
+
+
+  // ** FADE OUT FUNCTION **
+  function fadeOut(el) {
+   
+    el.style.opacity = 1;
+    (function fade() {
+        if ((el.style.opacity -= .1) < 0) {
+            el.style.display = "none";
+        } else {
+            requestAnimationFrame(fade);
+        }
+    })();
+};
+
+function fadeIn(el, display) {
+    el.style.opacity = 0;
+    displayMessage.textContent = display;
+    (function fade() {
+        var val = parseFloat(el.style.opacity);
+        if (!((val += .1) > 1)) {
+            el.style.opacity = val;
+            requestAnimationFrame(fade);
+        }
+    })();
+};
+
+
+
+//Remaining even handlers for start/reset/alarm button
 displayReset.addEventListener("click", reset);
 startTimer.addEventListener("click", countDownTimer);
 alarmButton.addEventListener("click", mute_Unmute);
+
+
+
+
+//  Add a message that fades in and out when the countdown/break
+// Fix that one darn button that turns a different shade when clicked (while the timer is running)
