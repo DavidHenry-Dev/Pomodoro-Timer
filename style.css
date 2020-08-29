@@ -4,6 +4,7 @@ body {
     place-items: center;
     text-align: center;
     font-family: 'Montserrat Alternates', sans-serif;
+    height: 100%;
 }
 
 h1 {
@@ -11,7 +12,8 @@ h1 {
 }
 
 .underlined {
-    padding-top: 10p text-decoration: underline;
+    padding-top: 10px;
+    text-decoration: underline;
 }
 
 
@@ -31,7 +33,11 @@ h1 {
     margin-bottom: none;
     padding: 15px 15px 0 0;
     border: none;
-    color: #474747;
+    color: #575757;
+}
+
+.sound-btn:hover {
+    color: #3f3f3f;
 }
 
 #sound-btn {
@@ -62,18 +68,21 @@ h1 {
 }
 
 #start {
-    border: none;
-    min-width: 65px;
     margin-right: 30px;
     padding: 10px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(1, 200, 207);
-    font-size: 16px;
+    border: none;
+    min-width: 65px;
     border-radius: 5px;
+    color: #FBFCFC;
+    background-color: rgb(1, 200, 207);
+    box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #B3B3B3;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+}
 
-
+#start:active {
+    transform: scale(0.97);
 }
 
 #start:focus {
@@ -81,22 +90,25 @@ h1 {
 }
 
 #start:hover {
-    background-color: rgb(3, 212, 219);
-
+    background-color: rgb(2, 194, 201);
 }
-
 
 #reset {
     margin-left: 30px;
     padding: 10px;
     border: none;
-    border-radius: 5px;
     min-width: 65px;
+    border-radius: 5px;
+    color: #FBFCFC;
     background-color: rgb(199, 126, 117);
-    color: #fff;
+    box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #B3B3B3;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+}
+
+#reset:active {
+    transform: scale(0.96);
 }
 
 #reset:focus {
@@ -104,7 +116,7 @@ h1 {
 }
 
 #reset:hover {
-    background-color: rgb(235, 153, 142);
+    background-color: rgb(190, 121, 112);
 }
 
 
@@ -154,6 +166,10 @@ h1 {
     box-shadow: 0 1px #FFFFFF inset, 0 1px 3px rgba(34, 25, 25, 0.2);
 }
 
+.adjust-btn:active {
+    transform: scale(0.96);
+}
+
 .adjust-btn:focus {
     outline: none;
 }
@@ -174,6 +190,7 @@ h1 {
     border-radius: 5px;
     background-color: #FBFCFC;
     font-size: 16px;
+    box-shadow: 0 1px 1px 0 #C7C7C7 inset;
 }
 
 .divider {
@@ -185,3 +202,5 @@ h1 {
     font-size: 24px;
     margin-top: 70px;
 }
+
+.page-footer {}
