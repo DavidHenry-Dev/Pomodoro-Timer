@@ -9,7 +9,7 @@ let countOverSound = new Audio("https://www.soundjay.com/misc/sounds/bell-ringin
 let breakOverSound = new Audio("https://www.soundjay.com/misc/sounds/bell-ringing-04.mp3");
 
 //Preselecting all the elements to use later
-const displayTotalTime = document.querySelector(".mainTimeDisplay");
+const displayTotalTime = document.querySelector(".countDownDisplay");
 const displayStudyTime = document.querySelector(".displayStudy");
 const displayBreakTime = document.querySelector(".displayBreak");
 const addStudyTime = document.querySelector("#addStudy");
@@ -18,12 +18,17 @@ const addBreakTime = document.querySelector("#addBreak");
 const minusBreakTime = document.querySelector("#minusBreak");
 const startTimer = document.querySelector("#start");
 const displayReset = document.querySelector("#reset");
-const alarmButton = document.querySelector("#sound-btn");
-const adjustButtons = document.querySelector(".adjust-btn");
+const alarmButton = document.querySelector(".sound-button");
+const adjustButtons = document.querySelector(".adjust-buttons");
+
+//displays inital starting time for the timers
+displayTotalTime.textContent = startingDisplay;
+displayStudyTime.textContent = startingDisplay;
+displayBreakTime.textContent = `${Math.floor(breakSeconds / 60)}:${breakSeconds % 60}0`;
 
 //The reset function stored in global variable to allow all timers access
 let reset = function() {
-    displayMessage.textContent = "";
+    displayMessage.innerHTML = "&nbsp;";
     isCountDown = false;
     startTimer.disabled = false;
     clearInterval(countDown);
@@ -35,12 +40,6 @@ let reset = function() {
     displayStudyTime.textContent = startingDisplay;
     displayTotalTime.textContent = startingDisplay;
 }
-
-//displays inital starting time for the timers
-displayTotalTime.textContent = startingDisplay;
-displayStudyTime.textContent = startingDisplay;
-displayBreakTime.textContent = `${Math.floor(breakSeconds / 60)}:${breakSeconds % 60}0`;
-
 
 function countDownTimer() {
     fadeIn(displayMessage, "Focus like you mean it!");
@@ -54,6 +53,7 @@ function countDownTimer() {
         const remainingSecs = seconds % 60;
         const displayTimer = `${minutes < 10 ? "0": ""}${minutes}:${remainingSecs < 10 ? "0": ""}${remainingSecs}`;
         displayTotalTime.textContent = displayTimer;
+    
         //stop the timer once it reachs 00:00 and begin the break timer
         if (seconds <= 0) {
             fadeIn(displayMessage, "Take a nice break :)");
@@ -75,26 +75,26 @@ function countDownTimer() {
                     breakOverSound.play();
                 }
             }, 1000);
-        }
+      }
     }, 1000);
 }
 
-//Used for disabling the incremental buttons whilte countdown is ongoing
+//Disables the incremental buttons whilte countdown is ongoing
 function disableAdjusting() {
     adjustButtons.disabled = true;
 }
 
-//Mutes and unmutes the alarm 
+//If sound button is clicked, mute alarm. Click again to unmute it
 function mute_Unmute() {
-
+    const alarmIcon = document.querySelector("#alarmIcon");
     if (isMuted === false) {
         isMuted = true;
-        alarmButton.innerHTML = `<i class="fas fa-volume-mute fa-lg"></i>`;
+        alarmIcon.innerHTML = `<i class="fas fa-volume-mute fa-lg"></i>`;
         alarmSound = "";
     } else if (isMuted === true) {
         isMuted = false;
-        alarmButton.innerHTML = `<i class="fas fa-volume-up fa-lg"></i>`
-        alarmSound = new Audio('shortalarm.wav');
+        alarmIcon.innerHTML = `<i class="fas fa-volume-up fa-lg"></i>`
+        alarmSound = countOverSound;
     }
 }
 ///////////////////Buttons for adjusting study/break times
@@ -137,21 +137,7 @@ minusBreakTime.addEventListener("click", function() {
 })
 /////////////////////////////
 
-let displayMessage = document.getElementById('messages');
-
-
-  // ** FADE OUT FUNCTION **
-  function fadeOut(el) {
-   
-    el.style.opacity = 1;
-    (function fade() {
-        if ((el.style.opacity -= .1) < 0) {
-            el.style.display = "none";
-        } else {
-            requestAnimationFrame(fade);
-        }
-    })();
-};
+let displayMessage = document.querySelector('.messages');
 
 function fadeIn(el, display) {
     el.style.opacity = 0;
@@ -165,15 +151,7 @@ function fadeIn(el, display) {
     })();
 };
 
-
-
 //Remaining even handlers for start/reset/alarm button
 displayReset.addEventListener("click", reset);
 startTimer.addEventListener("click", countDownTimer);
 alarmButton.addEventListener("click", mute_Unmute);
-
-
-
-
-//  Add a message that fades in and out when the countdown/break
-// Fix that one darn button that turns a different shade when clicked (while the timer is running)

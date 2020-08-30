@@ -12,44 +12,44 @@
 </head>
 
 <body>
-  <header>
+  <header class="mainHeader">
     <h1>A <span class="underlined">Simple</span> Pomodoro Timer</h1>
   </header>
 
   <div class="container">
 
-    <div class="sound-btn"><button id="sound-btn"><i class="fas fa-volume-up fa-lg"></i></button></div>
+    <div class="sound-button"><button id="alarmIcon"><i class="fas fa-volume-up fa-lg"></i></button></div>
 
     <div class="main-clock">
       <button id="start">Start</button>
-      <div class="mainTimeDisplay"></div>
+      <div class="countDownDisplay"></div>
       <button id="reset">Reset</button>
     </div>
 
     <p>Study/Break Time</p>
 
 
-    <div class="study-time">
+    <div class="studyBreakContainer">
 
       <div class="study-buttons">
-        <button class="adjust-btn" id="addStudy"><i class=" fas fa-caret-up fa-2x "></i></button>
-        <button class="adjust-btn" id="minusStudy"><i class="fas fa-caret-down fa-2x"></i></button>
+        <button class="adjust-buttons" id="addStudy"><i class=" fas fa-caret-up fa-2x "></i></button>
+        <button class="adjust-buttons" id="minusStudy"><i class="fas fa-caret-down fa-2x"></i></button>
       </div>
 
-      <div class=" displayBreakWindow">
+      <div class="studyBreakDisplay">
         <div class="displayStudy"></div>
         <div class="divider">/</div>
         <div class="displayBreak"></div>
       </div>
 
       <div class="break-buttons">
-        <button class="adjust-btn" id="addBreak"><i class="fas fa-caret-up fa-2x"></i></button>
-        <button class="adjust-btn" id="minusBreak"><i class="fas fa-caret-down fa-2x"></i></button>
+        <button class="adjust-buttons" id="addBreak"><i class="fas fa-caret-up fa-2x"></i></button>
+        <button class="adjust-buttons" id="minusBreak"><i class="fas fa-caret-down fa-2x"></i></button>
       </div>
     </div>
 
   </div>
-  <div id="messages"></div>
+  <div class="messages">&nbsp;</div>
   <footer class="page-footer">A little app created by
     <a href="https://github.com/DavidHenry-Dev">
       David Henry
