@@ -20,7 +20,7 @@ const startTimer = document.querySelector("#start");
 const displayReset = document.querySelector("#reset");
 const alarmButton = document.querySelector(".sound-button");
 const adjustButtons = document.querySelector(".adjust-buttons");
-
+const displayMessage = document.querySelector('.messages');
 //displays inital starting time for the timers
 displayTotalTime.textContent = startingDisplay;
 displayStudyTime.textContent = startingDisplay;
@@ -30,6 +30,7 @@ displayBreakTime.textContent = `${Math.floor(breakSeconds / 60)}:${breakSeconds 
 let reset = function() {
     displayMessage.innerHTML = "&nbsp;";
     isCountDown = false;
+    disableAdjusting(false);
     startTimer.disabled = false;
     clearInterval(countDown);
     clearInterval(breakTimer);
@@ -45,7 +46,7 @@ function countDownTimer() {
     fadeIn(displayMessage, "Focus like you mean it!");
     isCountDown = true;
     startTimer.disabled = true;
-
+    disableAdjusting(true);
     //begins the countdown timer
     countDown = setInterval(() => {
         seconds--;
@@ -80,8 +81,11 @@ function countDownTimer() {
 }
 
 //Disables the incremental buttons whilte countdown is ongoing
-function disableAdjusting() {
-    adjustButtons.disabled = true;
+function disableAdjusting(dis) {
+ addStudyTime.disabled = dis;
+ minusStudyTime.disabled = dis;
+ addBreakTime.disabled = dis;
+ minusBreakTime.disabled = dis; 
 }
 
 //If sound button is clicked, mute alarm. Click again to unmute it
@@ -97,20 +101,17 @@ function mute_Unmute() {
         alarmSound = countOverSound;
     }
 }
+
 ///////////////////Buttons for adjusting study/break times
 addStudyTime.addEventListener("click", function() {
-    if (isCountDown) {
-        disableAdjusting()
-    } else if (seconds < 3600) {
+    if (seconds < 3600) {
         seconds += 300;
         displayStudyTime.textContent = `${Math.floor(seconds / 60) < 10 ? "0": ""}${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? "0": ""}${seconds % 60}`;
     }
 })
 
 minusStudyTime.addEventListener("click", function() {
-    if (isCountDown) {
-        disableAdjusting()
-    } else if (seconds > 300) {
+    if (seconds > 300) {
         seconds -= 300;
         displayStudyTime.textContent = `${Math.floor(seconds / 60) < 10 ? "0": ""}${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? "0": ""}${seconds % 60}`;
     }
@@ -118,9 +119,7 @@ minusStudyTime.addEventListener("click", function() {
 
 
 addBreakTime.addEventListener("click", function() {
-    if (isCountDown) {
-        disableAdjusting()
-    } else if (breakSeconds < 3600) {
+     if (breakSeconds < 3600) {
         breakSeconds += 300;
         displayBreakTime.textContent = `${Math.floor(breakSeconds / 60) < 10 ? "0": ""}${Math.floor(breakSeconds / 60)}:${breakSeconds % 60 < 10 ? "0": ""}${breakSeconds % 60}`;
     }
@@ -128,16 +127,15 @@ addBreakTime.addEventListener("click", function() {
 
 
 minusBreakTime.addEventListener("click", function() {
-    if (isCountDown) {
-        disableAdjusting()
-    } else if (breakSeconds > 300) {
+    if (breakSeconds > 300) {
         breakSeconds -= 300;
         displayBreakTime.textContent = `${Math.floor(breakSeconds / 60) < 10 ? "0": ""}${Math.floor(breakSeconds / 60)}:${breakSeconds % 60 < 10 ? "0": ""}${breakSeconds % 60}`;
     }
 })
 /////////////////////////////
 
-let displayMessage = document.querySelector('.messages');
+
+
 
 function fadeIn(el, display) {
     el.style.opacity = 0;
