@@ -7,7 +7,7 @@ body {
 }
 
 .mainHeader {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 h1 {
@@ -36,6 +36,10 @@ h1 {
     padding: 15px 15px 0 0;
     border: none;
     color: #575757;
+}
+
+#alarmIcon {
+    background-color: transparent;
 }
 
 #alarmIcon:hover {
